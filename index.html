@@ -13,7 +13,7 @@
             display: flex;
             justify-content: center;
         }
-        .menu-container, .form-container {
+        .menu-container {
             background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
@@ -21,7 +21,7 @@
             width: 100%;
             max-width: 500px;
         }
-        h1, h2 {
+        h1 {
             color: #333;
             text-align: center;
         }
@@ -41,25 +41,6 @@
         ul li a:hover {
             text-decoration: underline;
         }
-        input[type="text"], input[type="number"] {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0 15px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
     </style>
 </head>
 <body>
@@ -67,77 +48,13 @@
 <div class="menu-container" id="menu">
     <h1>Mobile Services</h1>
     <ul>
-        <li><a href="#" onclick="showForm()">Add New Equipment</a></li>
+        <li><a href="YOUR_N8N_WEBHOOK_URL">Add New Equipment</a></li>
         <li><a href="#">View Mobile Units</a></li>
         <li><a href="#">Manage Contracts</a></li>
         <li><a href="#">Scheduling & Deployment</a></li>
         <li><a href="#">Reporting & Analytics</a></li>
     </ul>
 </div>
-
-<div class="form-container" id="form" style="display:none;">
-    <h2>Add New Equipment</h2>
-    <form id="equipmentForm">
-        <label>Equipment Name:</label>
-        <input type="text" id="equipmentName" required>
-
-        <label>Manufacturer Code (3 letters):</label>
-        <input type="text" id="manufacturerCode" maxlength="3" required>
-
-        <label>Scan Type Code (3 letters):</label>
-        <input type="text" id="scanTypeCode" maxlength="3" required>
-
-        <label>Serial Number (6 digits):</label>
-        <input type="number" id="serialNumber" min="0" max="999999" required>
-
-        <label>Scan Types Supported:</label>
-        <input type="text" id="scanTypesSupported" required>
-
-        <label>Manufacturer:</label>
-        <input type="text" id="manufacturer" required>
-
-        <button type="submit">Submit Equipment</button>
-        <button type="button" onclick="showMenu()" style="margin-top:10px;background-color:#dc3545;">Cancel</button>
-    </form>
-</div>
-
-<script>
-    function showForm() {
-        document.getElementById('menu').style.display = 'none';
-        document.getElementById('form').style.display = 'block';
-    }
-
-    function showMenu() {
-        document.getElementById('form').style.display = 'none';
-        document.getElementById('menu').style.display = 'block';
-    }
-
-    document.getElementById('equipmentForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const data = {
-            equipmentName: document.getElementById('equipmentName').value,
-            manufacturerCode: document.getElementById('manufacturerCode').value.toUpperCase(),
-            scanTypeCode: document.getElementById('scanTypeCode').value.toUpperCase(),
-            serialNumber: document.getElementById('serialNumber').value.padStart(6, '0'),
-            scanTypesSupported: document.getElementById('scanTypesSupported').value,
-            manufacturer: document.getElementById('manufacturer').value,
-        };
-
-        data.equipmentID = `${data.manufacturerCode}-${data.scanTypeCode}-${data.serialNumber}`;
-
-        fetch('YOUR_N8N_WEBHOOK_URL', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(result => alert('Equipment added successfully: ' + data.equipmentID))
-        .catch(error => alert('Error adding equipment: ' + error));
-
-        showMenu();
-    });
-</script>
 
 </body>
 </html>
