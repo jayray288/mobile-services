@@ -19,6 +19,11 @@
   <!-- ✅ Load jwt-simple for browser -->
   <script src="https://cdn.jsdelivr.net/npm/jwt-simple@0.5.6/jwt-simple.js"></script>
 
+  <script>
+    // jwt-simple attaches itself as window.jwt_simple, so we alias it
+    window.jwt = window.jwt_simple;
+  </script>
+
   <!-- ✅ Load login logic -->
   <script defer src="/js/auth.js"></script>
 </head>
