@@ -16,11 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const scanType = document.getElementById('scan-type').value;
     const manufacturer = document.getElementById('manufacturer').value.trim();
 
-    const payload = {
-      "equipment-name": equipmentName,
-      "scan-type": scanType,
-      "manufacturer": manufacturer
-    };
+    const formData = new FormData(form);
+	const payload = {
+		"equipment-name": formData.get("equipment-name"),
+		"scan-type": formData.get("scan-type"),
+		"manufacturer": formData.get("manufacturer")
+};
+
+		console.log("Payload being sent:", payload);
 
     try {
       const response = await fetch('https://n8n-blgy.onrender.com/webhook/add-new-equipment', {
