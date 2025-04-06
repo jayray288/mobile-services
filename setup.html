@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Setup Admin User</title>
+  <script defer src="js/auth.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; max-width: 400px; margin: auto; }
+    input { display: block; width: 100%; padding: 0.5rem; margin: 1rem 0; }
+    button { padding: 0.5rem 1rem; }
+    .error { color: red; }
+  </style>
+</head>
+
+<!-- Place in your HTML <head> or right before </body> -->
+<script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsonwebtoken@9.0.2/dist/index.umd.min.js"></script>
+
+<body>
+  <h2>🔐 First-Time Admin Setup</h2>
+  <p>Create your administrator account to manage the system.</p>
+  <form id="setupForm">
+    <label for="username">Username</label>
+    <input type="text" id="username" required>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" required>
+
+    <button type="submit">Create Admin</button>
+    <p class="error" id="errorMsg"></p>
+  </form>
+</body>
+</html>
