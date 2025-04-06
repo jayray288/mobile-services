@@ -1,5 +1,34 @@
 const USER_STORAGE_KEY = 'equipmentAppUsers';
 
+// 🔐 Minimal browser-safe JWT encoder (HS256, for n8n compatibility)
+function base64url(source) {
+  return btoa(String.fromCharCode(...new Uint8Array(source)))
+    .replace(/=+$/, '').replace(/\+/g, '-').replace(/\//g, '_');
+}
+
+function encodeJWT(payload, secret) {
+  const encoder = new TextEncoder();
+  const header = { alg: 'HS256', typ: 'JWT' };
+  const headerBase64 = base64url(encoder.encode(JSON.stringify(header)));
+  const payloadBase64 = base64url(encoder.encode(JSON.stringify(payload)));
+  const unsignedToken = `${headerBase64}.${payloadBase64}`;
+
+  const key = crypto.subtle.importKey(
+    'raw',
+    encoder.encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
+  );
+
+  return key.then(k =>
+    crypto.subtle.sign('HMAC', k, encoder.encode(unsignedToken))
+  ).then(sig => {
+    const signature = base64url(sig);
+    return `${unsignedToken}.${signature}`;
+  });
+}
+
 // 🔄 Utility: Get user list from localStorage
 function getUsers() {
   const data = localStorage.getItem(USER_STORAGE_KEY);
@@ -76,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // ✅ JWT creation (using jwt-simple)
+      // ✅ JWT creation using native Web Crypto
       const payload = {
         sub: user.username,
         role: user.role,
@@ -84,16 +113,16 @@ document.addEventListener('DOMContentLoaded', () => {
         iat: Math.floor(Date.now() / 1000)
       };
 
-      const secret = '*Parivar98'; // 🔐 Use the same as in your n8n webhook node
-      const token = jwt.encode(payload, secret);
-
-      // 💾 Store login session
-      sessionStorage.setItem('token', token);
-      sessionStorage.setItem('username', user.username);
-      sessionStorage.setItem('role', user.role);
-
-      // ➡ Redirect to menu
-      window.location.href = 'menu.html';
+      const secret = '*Parivar98'; // 🔐 Replace with your actual n8n JWT secret
+      encodeJWT(payload, secret).then(token => {
+        sessionStorage.setItem('token', token);
+        sessionStorage.setItem('username', user.username);
+        sessionStorage.setItem('role', user.role);
+        window.location.href = 'menu.html';
+      }).catch(err => {
+        console.error('JWT Error:', err);
+        errorMsg.textContent = 'Login failed. Please try again.';
+      });
     });
   }
 });
