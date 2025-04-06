@@ -16,12 +16,10 @@
     window.bcrypt = dcodeIO.bcrypt;
   </script>
 
-  <!-- ✅ Load jwt-simple for browser -->
-  <script src="https://cdn.jsdelivr.net/npm/jwt-simple@0.5.6/jwt-simple.js"></script>
-
+  <!-- ✅ Load jwt-encode -->
+  <script src="https://cdn.jsdelivr.net/npm/jwt-encode@1.2.0/build/index.umd.min.js"></script>
   <script>
-    // jwt-simple attaches itself as window.jwt_simple, so we alias it
-    window.jwt = window.jwt_simple;
+    window.jwt = window.jwt_encode;
   </script>
 
   <!-- ✅ Load login logic -->
