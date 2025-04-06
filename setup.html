@@ -10,13 +10,19 @@
     .error { color: red; }
   </style>
 
-  <!-- ✅ Load bcryptjs BEFORE auth.js -->
-  <script src="js/bcrypt.min.js"></script>
-  <!-- JWT can be used later during login -->
+  <!-- ✅ Load bcryptjs locally from root /js directory -->
+  <script src="/js/bcrypt.min.js"></script>
+
+  <!-- ✅ Assign to global 'bcrypt' so auth.js can use it -->
+  <script>
+    window.bcrypt = dcodeIO.bcrypt;
+  </script>
+
+  <!-- ✅ JWT for future use (login JWT issuance/verification) -->
   <script src="https://cdn.jsdelivr.net/npm/jsonwebtoken@9.0.2/dist/index.umd.min.js"></script>
 
-  <!-- ✅ auth.js depends on the libraries above -->
-  <script defer src="js/auth.js"></script>
+  <!-- ✅ Your auth logic, loaded last -->
+  <script defer src="/js/auth.js"></script>
 </head>
 <body>
   <h2>🔐 First-Time Admin Setup</h2>
