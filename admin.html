@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; max-width: 700px; margin: auto; }
+    input, select, button {
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+    }
+    td, th {
+      border: 1px solid #ddd;
+      padding: 0.5rem;
+      text-align: left;
+    }
+    .admin-only { color: red; }
+  </style>
+  <script src="/js/bcrypt.min.js"></script>
+  <script>
+    window.bcrypt = dcodeIO.bcrypt;
+  </script>
+  <script defer src="/js/admin.js"></script>
+</head>
+<body>
+  <h2>⚙️ Admin Panel</h2>
+  <p id="adminNotice"></p>
+
+  <form id="addUserForm">
+    <h3>Add New User</h3>
+    <input type="text" id="new-username" placeholder="Username" required>
+    <input type="password" id="new-password" placeholder="Password" required>
+    <select id="new-role">
+      <option value="user">User</option>
+      <option value="admin">Admin</option>
+    </select>
+    <button type="submit">Add User</button>
+  </form>
+
+  <h3>Existing Users</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="userList"></tbody>
+  </table>
+
+  <a href="menu.html">⬅ Back to Menu</a>
+</body>
+</html>
