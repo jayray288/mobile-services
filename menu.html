@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Main Menu</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: auto; }
+    h2 { margin-bottom: 1rem; }
+    a.button {
+      display: inline-block;
+      margin: 0.5rem 0;
+      padding: 0.5rem 1rem;
+      background-color: #007BFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    .logout {
+      background-color: #dc3545;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const username = sessionStorage.getItem('username');
+      const role = sessionStorage.getItem('role');
+      const welcome = document.getElementById('welcome');
+      const adminLink = document.getElementById('adminLink');
+
+      if (!username || !role) {
+        alert('You are not logged in. Redirecting to login...');
+        window.location.href = 'index.html';
+        return;
+      }
+
+      welcome.textContent = `Welcome, ${username}!`;
+
+      if (role !== 'admin') {
+        adminLink.style.display = 'none';
+      }
+
+      document.getElementById('logout').addEventListener('click', () => {
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+      });
+    });
+  </script>
+</head>
+<body>
+  <h2 id="welcome">Welcome!</h2>
+
+  <a href="add-equipment.html" class="button">➕ Add New Equipment</a>
+  <a href="admin.html" id="adminLink" class="button">⚙️ Admin Panel</a>
+  <br><br>
+  <a href="#" id="logout" class="button logout">🚪 Log Out</a>
+</body>
+</html>
