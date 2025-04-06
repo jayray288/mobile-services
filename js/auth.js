@@ -57,3 +57,46 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// Login Page Logic
+document.addEventListener('DOMContentLoaded', () => {
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const errorMsg = document.getElementById('errorMsg');
+
+      const { users } = getUsers();
+      const user = users.find(u => u.username === username);
+      if (!user) {
+        errorMsg.textContent = 'User not found.';
+        return;
+      }
+
+      const valid = bcrypt.compareSync(password, user.passwordHash);
+      if (!valid) {
+        errorMsg.textContent = 'Invalid password.';
+        return;
+      }
+
+      // ✅ Create JWT token for n8n webhook
+      const payload = {
+        sub: user.username,
+        role: user.role,
+        iss: 'static-site'
+      };
+
+      const token = window.jwt.sign(payload, '*Parivar98');  // use same secret as n8n webhook
+
+      // Store JWT and user info
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('username', user.username);
+      sessionStorage.setItem('role', user.role);
+
+      // Redirect to menu
+      window.location.href = 'menu.html';
+    });
+  }
+});
