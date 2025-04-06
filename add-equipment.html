@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add New Equipment</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: auto; }
+    input, select, button {
+      display: block;
+      width: 100%;
+      margin: 1rem 0;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    .message { margin: 1rem 0; font-weight: bold; }
+  </style>
+
+  <!-- ✅ Load form logic -->
+  <script defer src="/js/form.js"></script>
+</head>
+<body>
+  <h2>➕ Add New Scanning Equipment</h2>
+
+  <form id="equipmentForm">
+    <label for="equipment-name">Equipment Name</label>
+    <input type="text" id="equipment-name" name="equipment-name" required>
+
+    <label for="scan-type">Scan Type</label>
+    <input type="text" id="scan-type" name="scan-type" required>
+
+    <label for="manufacturer">Manufacturer</label>
+    <input type="text" id="manufacturer" name="manufacturer" required>
+
+    <button type="submit">Submit</button>
+    <div class="message" id="formMessage"></div>
+  </form>
+
+  <a href="menu.html">⬅ Back to Menu</a>
+</body>
+</html>
