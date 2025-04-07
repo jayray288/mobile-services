@@ -5,6 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+	const spinner = document.getElementById('spinner');
+	const message = document.getElementById('formMessage');
+	spinner.style.display = 'block';
+	message.textContent = '';
+	message.style.color = '';
+
+
     const token = sessionStorage.getItem('token');
     if (!token) {
       alert('You are not logged in. Redirecting to login...');
@@ -36,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const text = await response.text();
+	  spinner.style.display = 'none';
+
 
       if (text.includes('Success - equipment has been added')) {
         form.reset();
@@ -48,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } catch (error) {
       console.error('Submission error:', error);
+	  spinner.style.display = 'none';
       message.style.color = 'red';
       message.textContent = 'An error occurred while submitting the form.';
     }
