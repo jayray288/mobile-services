@@ -24,13 +24,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     dropdown.innerHTML = '<option value="">-- Select Equipment --</option>';
     equipmentList.forEach(eq => {
       const option = document.createElement('option');
-      option.value = eq.id; // assuming each equipment item has 'id' and 'name'
-      option.textContent = eq.name;
+      option.value = eq.equipment_id; // assuming each equipment item has 'id' and 'name'
+      option.textContent = `${eq.equipment_id} – ${eq.equipment_name}`;
       dropdown.appendChild(option);
+	  document.getElementById('formContainer').style.display = 'block';
+	  document.getElementById('loadingNotice').style.display = 'none';
+
     });
 
   } catch (err) {
     console.error('Failed to load equipment list:', err);
+	document.getElementById('loadingNotice').textContent = '⚠️ Failed to load equipment list. Please try again later.';
     dropdown.innerHTML = '<option value="">⚠️ Failed to load equipment</option>';
   }
 
