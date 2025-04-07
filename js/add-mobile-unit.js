@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     try {
-      const response = await fetch('https://n8n-blgy.onrender.com/webhook/create-mobile-unit-placeholder', {
+      const response = await fetch('https://n8n-blgy.onrender.com/webhook-test/add-mobile-unit', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
