@@ -27,10 +27,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       option.value = eq.equipment_id; // assuming each equipment item has 'id' and 'name'
       option.textContent = `${eq.equipment_id} – ${eq.equipment_name}`;
       dropdown.appendChild(option);
-	  document.getElementById('formContainer').style.display = 'block';
-	  document.getElementById('loadingNotice').style.display = 'none';
-
+	  
     });
+	// ✅ Show form after eqiuipment loads
+	document.getElementById('formContainer').style.display = 'block';
+	document.getElementById('loadingNotice').style.display = 'none';
 
   } catch (err) {
     console.error('Failed to load equipment list:', err);
@@ -46,7 +47,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     message.style.color = '';
 
     const payload = {
-      unit_name: form.unit_name.value.trim(),
       license_plate: form.license_plate.value.trim(),
       state: form.state.value.trim().toUpperCase(),
       vin: form.vin.value.trim(),
