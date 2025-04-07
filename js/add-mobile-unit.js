@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     try {
-      const response = await fetch('https://n8n-blgy.onrender.com/webhook-test/add-mobile-unit', {
+      const response = await fetch('https://n8n-blgy.onrender.com/webhook/add-mobile-unit', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         },
         body: JSON.stringify(payload)
       });
+
 
       const text = await response.text();
       spinner.style.display = 'none';
